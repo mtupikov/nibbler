@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Snake.h"
-#include "Map.h"
-#include "GameModel.h"
+#include "model/Snake.h"
+#include "model/Map.h"
+#include "model/GameModel.h"
 #include "GuiManager.h"
 
 #include <memory>
@@ -13,7 +13,7 @@ public:
 	void gameLoop();
 
 private:
-	std::unqiue_ptr<GuiManager> m_guiManager;
-	std::unqiue_ptr<GameModel> m_model;
+    std::unique_ptr<GuiManager> m_guiManager;
+    std::unique_ptr<GameModel> m_model;
 };
 

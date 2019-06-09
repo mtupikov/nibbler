@@ -8,7 +8,7 @@ GameModel::GameModel(int width, int height) {
 	m_snake.reset(new Snake(width / 2, height / 2));
 	m_lib = DisplayLibrary::SDL;
 	m_quit = false;
-	m_gameModel = this;
+    m_gameModel.reset(this);
 	m_score = 0;
 }
 
@@ -36,11 +36,11 @@ void GameModel::quit() {
 	m_quit = true;
 }
 
-GameModel* GameModel::m_gameModel = nullptr;
+std::unique_ptr<GameModel> GameModel::m_gameModel{ nullptr };
 
 GameModel* GameModel::getInstance(int x, int y) {
 	if (m_gameModel != nullptr) {
-		return m_gameModel;
+        return m_gameModel.get();
 	}
 
 	return new GameModel(x, y);

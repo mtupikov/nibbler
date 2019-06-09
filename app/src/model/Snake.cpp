@@ -2,6 +2,7 @@
 
 #include "GameModel.h"
 #include "SnakeBlock.h"
+#include "FoodBlock.h"
 #include "Map.h"
 
 #include <iostream>
@@ -20,7 +21,7 @@ void Snake::setDirection(Directions dir) {
 }
 
 void Snake::moveSnake() {
-	if (checkCollision(*(*(m_snakeBlocks.begin()->get())))) {
+    if (checkCollision(*m_snakeBlocks.begin()->get())) {
 		GameModel::getInstance()->quit();
 	}
 
@@ -50,7 +51,7 @@ void Snake::addBlockToTail() {
 	int lastX = lastBlock.getX(),
 		lastY = lastBlock.getY();
 
-	switch (_snakeDirection) {
+    switch (m_snakeDirection) {
 		case Directions::Up:
 			addBlock(lastX, --lastY);
 			break;
@@ -70,7 +71,7 @@ void Snake::addBlock(int x, int y) {
 	m_snakeBlocks.push_back(SnakeBlockPtr(new SnakeBlock(x, y, BlockType::Snake, false)));
 }
 
-std::list<SnakeBlockPtr>& Snake::getSnakeList() const{
+std::list<SnakeBlockPtr>& Snake::getSnakeList() {
 	return m_snakeBlocks;
 }
 
@@ -123,7 +124,7 @@ bool Snake::checkSnakeBlocksCollision(SnakeBlock& head) const {
 }
 
 bool Snake::checkBlockLiesOnThisAxis(int x, int y) const {
-	for (auto it = ++_snakeBlocks.begin(); it != _snakeBlocks.end(); it++) {
+    for (auto it = ++m_snakeBlocks.begin(); it != m_snakeBlocks.end(); it++) {
 		if ((*it)->getX() == x && (*it)->getY() == y) {
 			return true;
 		}

@@ -17,6 +17,3 @@ public:
 private:
 	bool m_isHead;
 };
-
-
-#endif

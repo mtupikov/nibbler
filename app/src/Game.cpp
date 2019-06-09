@@ -14,14 +14,14 @@ Game::Game(int width, int height) {
 void Game::gameLoop() {
 	while (!m_model->isQuit()) {
 		IGui* gui = m_guiManager->getGui();
-		gui->checkControls(m_model);
+        gui->checkControls(m_model.get());
 		m_model->getSnake()->moveSnake();
 
-		if (m_model->getSnake()->checkFoodBlockCollision(m_model->getMap().getFoodBlock())) {
-			m_model->getMap().relocateFood(m_model->getSnake()->getSnakeList());
+        if (m_model->getSnake()->checkFoodBlockCollision(*m_model->getMap()->getFoodBlock().get())) {
+            m_model->getMap()->relocateFood(m_model->getSnake()->getSnakeList());
 			m_model->incScore();
 		}
 
-		gui->display(m_model);
+        gui->display(m_model.get());
 	}
 }

@@ -18,7 +18,7 @@ public:
 
 private:
 	static std::unique_ptr<Map> m_map;
-	static int m_width,
+    static int m_width;
 	static int m_height;
 
 	Map(int width, int height);

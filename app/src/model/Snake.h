@@ -18,7 +18,7 @@ public:
 	void setDirection(Directions dir);
 	Directions getDirection() const;
 	void moveSnake();
-	std::list<SnakeBlockPtr>& getSnakeList() const;
+    std::list<SnakeBlockPtr>& getSnakeList();
 	bool checkFoodBlockCollision(FoodBlock& foodBlock);
 
 private:
@@ -32,6 +32,3 @@ private:
 	Directions m_snakeDirection;
 	std::list<SnakeBlockPtr> m_snakeBlocks;
 };
-
-
-#endif

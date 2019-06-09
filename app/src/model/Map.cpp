@@ -34,7 +34,7 @@ Map::Map(int width, int height) {
 	m_map.reset(this);
 }
 
-std::list<BlockPtr> Map::getMapBlocks() {
+std::list<BlockPtr>& Map::getMapBlocks() {
 	return m_mapBlocks;
 }
 
@@ -62,7 +62,7 @@ void Map::relocateFood(const std::list<SnakeBlockPtr>& snakeBlocks) {
 }
 
 bool Map::checkForNewFoodLocation(const std::list<SnakeBlockPtr>& snakeBlocks, int x, int y) {
-	for (SnakeBlockPtr& block : snakeBlocks) {
+    for (const SnakeBlockPtr& block : snakeBlocks) {
 		if (block->getX() == x && block->getY() == y) {
 			return true;
 		}
@@ -71,6 +71,6 @@ bool Map::checkForNewFoodLocation(const std::list<SnakeBlockPtr>& snakeBlocks, i
 	return false;
 }
 
-Map* Map::m_map = nullptr;
+std::unique_ptr<Map> Map::m_map{ nullptr };
 int Map::m_width = 0;
 int Map::m_height = 0;

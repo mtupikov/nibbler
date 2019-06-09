@@ -7,5 +7,5 @@ class FoodBlock;
 class SnakeBlock;
 
 using BlockPtr = std::shared_ptr<Block>;
-using FoodBlockPtr = std::shared_ptr<FoodBlockPtr>;
-using SnakeBlockPtr = std::shared_ptr<SnakeBlockPtr>;
+using FoodBlockPtr = std::shared_ptr<FoodBlock>;
+using SnakeBlockPtr = std::shared_ptr<SnakeBlock>;

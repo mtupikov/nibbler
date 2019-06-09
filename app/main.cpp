@@ -1,12 +1,15 @@
-#include "Snake.h"
-#include "Game.h"
-
-#include <iostream>
 #include <memory>
+#include <iostream>
+#include <string>
+#include <time.h>
+#include <cctype>
+
+#include "model/Snake.h"
+#include "Game.h"
 
 int usage() {
 	std::cout << "Usage: ./nibbler [60 <= width <= 10] [60 <= height <= 10]" << std::endl;
-	return (1);
+    return -1;
 }
 
 bool isStrDigit(char* str) {
@@ -21,7 +24,7 @@ bool isStrDigit(char* str) {
 	return true;
 }
 
-int *getMapSize(char **argv) {
+int* getMapSize(char **argv) {
 	if (!isStrDigit(argv[1]) || !isStrDigit(argv[2])) {
 		return nullptr;
 	}
@@ -29,6 +32,7 @@ int *getMapSize(char **argv) {
 	auto* mapSize = new int[2];
 	mapSize[0] = std::stoi(argv[1]);
 	mapSize[1] = std::stoi(argv[2]);
+
 	return mapSize;
 }
 
@@ -37,7 +41,7 @@ int	main(int argc, char **argv){
 		return usage();
 	}
 
-	std::unqiue_ptr<Game> game;
+    std::unique_ptr<Game> game;
 
 	srand(static_cast<unsigned int>(time(nullptr)));
 
@@ -52,7 +56,7 @@ int	main(int argc, char **argv){
 		game.reset(new Game(mapSize[0], mapSize[1]));
 		delete mapSize;
 		game->gameLoop();
-    } catch (std::exception &e) {
+    } catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
 	}
 

@@ -2,7 +2,9 @@
 
 #include "IGui.h"
 
-class GuiManager {
+#include <string>
+
+class GuiManager final {
 
 public:
     GuiManager() = default;
@@ -16,6 +18,3 @@ private:
     IGui* m_gui;
     void* m_dlHandle;
 };
-
-
-#endif
