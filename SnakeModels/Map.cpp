@@ -31,20 +31,26 @@ Map::Map(int width, int height) {
 	}
 
 	m_foodBlock.reset(new FoodBlock(2, 2, BlockType::Food));
-	m_map.reset(this);
 }
 
 std::list<BlockPtr>& Map::getMapBlocks() {
 	return m_mapBlocks;
 }
 
-Map* Map::getInstance(int width, int height) {
-	if (m_map != nullptr) {
-		return m_map.get();
+std::shared_ptr<Map> Map::getInstance(int width, int height) {
+    if (m_map) {
+        return m_map;
 	}
 
-	return new Map(width, height);
+    m_map.reset(new Map(width, height));
+
+    return m_map;
 }
+
+std::shared_ptr<Map> Map::getInstance() {
+    return getInstance(20, 20);
+}
+
 
 FoodBlockPtr Map::getFoodBlock() const {
 	return m_foodBlock;
@@ -71,6 +77,6 @@ bool Map::checkForNewFoodLocation(const std::list<SnakeBlockPtr>& snakeBlocks, i
 	return false;
 }
 
-std::unique_ptr<Map> Map::m_map{ nullptr };
+std::shared_ptr<Map> Map::m_map{ nullptr };
 int Map::m_width = 0;
 int Map::m_height = 0;

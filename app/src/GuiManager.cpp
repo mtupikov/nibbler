@@ -9,53 +9,30 @@
 
 #include "Exception.h"
 
-void GuiManager::loadGui(std::string& lib, int width, int height) {
-	IGui *(*init_ptr)(int, int);
-
-#ifndef WIN32
-    m_dlHandle = dlopen(lib.c_str(), RTLD_GLOBAL);
-
-    if (!m_dlHandle) {
-        throw LoadGuiException(dlerror());
+void GuiManager::loadGui(const std::string& lib, int width, int height) {
+    if (m_dlloader) {
+        m_dlloader->closeLibrary();
     }
 
-    init_ptr = (IGui *(*)(int, int))(dlsym(m_dlHandle, "init"));
+    m_dlloader.reset(new dlloader::DLLoader<IGui>(lib));
 
-    if (!init_ptr) {
-        throw FunctionAbsentException(dlerror());
-    }
-#else
-    m_dlHandle = LoadLibrary(lib.c_str());
-
-    if (!m_dlHandle) {
+    if (!m_dlloader->openLibrary()) {
         throw LoadGuiException("Cannot load library");
     }
 
-    init_ptr = (IGui *(*)(int, int))GetProcAddress(static_cast<HINSTANCE>(m_dlHandle), "init");
+    m_gui = m_dlloader->getInstance(width, height);
 
-    if (!init_ptr) {
+    if (!m_gui) {
         throw FunctionAbsentException("Init function is absent");
     }
-#endif
-
-
-
-
-
-    m_gui = init_ptr(width, height);
 }
-
 
 GuiManager::~GuiManager() {
-    delete m_gui;
-
-#ifndef WIN32
-    dlclose(m_dlHandle);
-#else
-    FreeLibrary(static_cast<HINSTANCE>(m_dlHandle));
-#endif
+    if (m_dlloader) {
+        m_dlloader->closeLibrary();
+    }
 }
 
-IGui* GuiManager::getGui() const {
+std::shared_ptr<IGui> GuiManager::getGui() const {
     return m_gui;
 }

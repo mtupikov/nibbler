@@ -2,19 +2,40 @@
 
 #include "IGui.h"
 
+#ifdef WIN32
+#include "Win/DLLoader.h"
+#else
+#include "Unix/DLLoader.h"
+#endif
+
 #include <string>
+#include <memory>
+
+namespace guiLibraries {
+
+#ifdef WIN32
+const std::string sdlLibrary = "SDL.dll";
+#endif
+#ifdef __linux__
+const std::string sdlLibrary = "SDL.so";
+#endif
+#ifdef __APPLE__
+const std::string sdlLibrary = "SDL.dylib";
+#endif
+
+} // end namespace guiLibraries
 
 class GuiManager final {
 
 public:
     GuiManager() = default;
-    virtual ~GuiManager();
+    ~GuiManager();
 
-    void loadGui(std::string& lib, int width, int height);
+    void loadGui(const std::string& lib, int width, int height);
 
-    IGui* getGui() const;
+    std::shared_ptr<IGui> getGui() const;
 
 private:
-    IGui* m_gui;
-    void* m_dlHandle;
+    std::shared_ptr<IGui> m_gui;
+    std::unique_ptr<dlloader::DLLoader<IGui>> m_dlloader;
 };

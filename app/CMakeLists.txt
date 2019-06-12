@@ -15,4 +15,6 @@ target_include_directories(libSource PUBLIC
 
 add_executable(${PROJECT_NAME} main.cpp)
 
+target_link_libraries(libSource dlloader guiInterface snakeModels)
+
 target_link_libraries(${PROJECT_NAME} libSource)

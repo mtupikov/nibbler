@@ -7,7 +7,8 @@
 
 class Map {
 public:
-	static Map* getInstance(int width, int height);
+    static std::shared_ptr<Map> getInstance(int width, int height);
+    static std::shared_ptr<Map> getInstance();
 
 	static int getWidth();
 	static int getHeight();
@@ -17,7 +18,7 @@ public:
 	void relocateFood(const std::list<SnakeBlockPtr>& snakeBlocks);
 
 private:
-	static std::unique_ptr<Map> m_map;
+    static std::shared_ptr<Map> m_map;
     static int m_width;
 	static int m_height;
 

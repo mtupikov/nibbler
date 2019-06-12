@@ -1,11 +1,10 @@
 #pragma once
 
-#include "model/Snake.h"
-#include "model/Map.h"
-#include "model/GameModel.h"
 #include "GuiManager.h"
 
 #include <memory>
+
+class GameModel;
 
 class Game final {
 public:
@@ -14,6 +13,5 @@ public:
 
 private:
     std::unique_ptr<GuiManager> m_guiManager;
-    std::unique_ptr<GameModel> m_model;
+    std::shared_ptr<GameModel> m_model;
 };
-

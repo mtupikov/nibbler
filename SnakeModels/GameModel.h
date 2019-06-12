@@ -11,13 +11,13 @@ enum class DisplayLibrary {
 
 class GameModel final {
 public:
-	static GameModel* getInstance(int x, int y);
-	static GameModel* getInstance();
+    static std::shared_ptr<GameModel> getInstance(int x, int y);
+    static std::shared_ptr<GameModel> getInstance();
 
 	bool isQuit() const;
 	void quit();
 	std::shared_ptr<Snake> getSnake() const;
-	std::shared_ptr<Map> getMap() const;
+    std::shared_ptr<Map> getMap() const;
 	DisplayLibrary getLib() const;
 	void setLib(DisplayLibrary &lib);
 	int getScore() const;
@@ -25,10 +25,12 @@ public:
 
 private:
 	GameModel(int x, int y);
+
 	std::shared_ptr<Snake> m_snake;
-	std::shared_ptr<Map> m_map;
-	DisplayLibrary m_lib;
-	int m_score;
+    std::shared_ptr<Map> m_map;
+    DisplayLibrary m_lib;
+    int m_score;
 	bool m_quit;
-	static std::unique_ptr<GameModel> m_gameModel;
+
+    static std::shared_ptr<GameModel> m_gameModel;
 };

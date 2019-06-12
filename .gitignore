@@ -1,8 +1,76 @@
+# Prerequisites
+*.d
 
-CMakeLists\.txt\.user
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
 
-nibbler\.pdb
+# Linker output
+*.ilk
+*.map
+*.exp
 
-nibbler\.ilk
+# Precompiled Headers
+*.gch
+*.pch
 
-nibbler\.exe
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# macos
+.DS_Store
+
+# VS
+*.user
+
+# CLion
+.idea
+cmake-build-debug/
+
+# Python
+venv/
+*.pyc
+
+# LaTeX temporary files
+*.aux
+*.log
+*.toc
+**/**/_minted-*/*
+*.pyg
+
+# build dirs
+build

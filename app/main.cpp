@@ -3,40 +3,39 @@
 #include <string>
 #include <time.h>
 #include <cctype>
+#include <algorithm>
 
-#include "model/Snake.h"
 #include "Game.h"
 
+namespace {
+
+struct Parameters final {
+    int width;
+    int height;
+};
+
 int usage() {
-	std::cout << "Usage: ./nibbler [60 <= width <= 10] [60 <= height <= 10]" << std::endl;
+    std::cout << "Usage: ./nibbler [60 <= width <= 10] [60 <= height <= 10]" << std::endl;
     return -1;
 }
 
-bool isStrDigit(char* str) {
-	while (*str) {
-		if (!std::isdigit(*str)) {
-			return false;
-		}
-
-		str++;
-	}
-
-	return true;
+bool isStrDigit(const std::string&& str) {
+    return std::find_if(str.begin(), str.end(), [](char c) {
+        return std::isdigit(c);
+    }) != str.end();
 }
 
-int* getMapSize(char **argv) {
-	if (!isStrDigit(argv[1]) || !isStrDigit(argv[2])) {
-		return nullptr;
-	}
+Parameters getMapSize(char** argv) {
+    if (!isStrDigit(argv[1]) || !isStrDigit(argv[2])) {
+        return {-1, -1};
+    }
 
-	auto* mapSize = new int[2];
-	mapSize[0] = std::stoi(argv[1]);
-	mapSize[1] = std::stoi(argv[2]);
-
-	return mapSize;
+    return {std::stoi(argv[1]), std::stoi(argv[2])};
 }
 
-int	main(int argc, char **argv){
+}
+
+int	main(int argc, char** argv){
 	if (argc != 3) {
 		return usage();
 	}
@@ -46,19 +45,17 @@ int	main(int argc, char **argv){
 	srand(static_cast<unsigned int>(time(nullptr)));
 
 	try {
-		int* mapSize = getMapSize(argv);
+        auto params = getMapSize(argv);
 
-		if (mapSize == nullptr || mapSize[0] < 10 || mapSize[0] > 60 || mapSize[1] < 10 || mapSize[1] > 60) {
-			delete mapSize;
+        if (params.width < 10 || params.width > 60 || params.height < 10 || params.height > 60) {
 			return usage();
 		}
 
-		game.reset(new Game(mapSize[0], mapSize[1]));
-		delete mapSize;
+        game.reset(new Game(params.width, params.height));
 		game->gameLoop();
     } catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
-	}
+    } catch (...) {}
 
 	return 0;
 }

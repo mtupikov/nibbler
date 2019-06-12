@@ -4,11 +4,10 @@
 #include "Snake.h"
 
 GameModel::GameModel(int width, int height) {
-	m_map.reset(Map::getInstance(width, height));
+    m_map = Map::getInstance(width, height);
 	m_snake.reset(new Snake(width / 2, height / 2));
 	m_lib = DisplayLibrary::SDL;
-	m_quit = false;
-    m_gameModel.reset(this);
+    m_quit = false;
 	m_score = 0;
 }
 
@@ -36,17 +35,19 @@ void GameModel::quit() {
 	m_quit = true;
 }
 
-std::unique_ptr<GameModel> GameModel::m_gameModel{ nullptr };
+std::shared_ptr<GameModel> GameModel::m_gameModel{ nullptr };
 
-GameModel* GameModel::getInstance(int x, int y) {
-	if (m_gameModel != nullptr) {
-        return m_gameModel.get();
+std::shared_ptr<GameModel> GameModel::getInstance(int x, int y) {
+    if (m_gameModel) {
+        return m_gameModel;
 	}
 
-	return new GameModel(x, y);
+    m_gameModel.reset(new GameModel(x, y));
+
+    return m_gameModel;
 }
 
-GameModel* GameModel::getInstance() {
+std::shared_ptr<GameModel> GameModel::getInstance() {
 	return getInstance(20, 20);
 }
 
