@@ -11,13 +11,11 @@ public:
     ~SDLib() override = default;
 
     SDL_Window* getWindow();
-    SDL_Surface* getScreen();
 
     void setScreen(SDL_Surface* screen);
     void setWindow(SDL_Window* window);
     void display(std::shared_ptr<GameModel>& model) override;
     void checkControls(std::shared_ptr<GameModel>& model) override;
-    void close();
 
 private:
     void displayMap(Map& map, int blockSize);

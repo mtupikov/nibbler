@@ -17,10 +17,10 @@ namespace guiLibraries {
 const std::string sdlLibrary = "SDL.dll";
 #endif
 #ifdef __linux__
-const std::string sdlLibrary = "SDL.so";
+const std::string sdlLibrary = "libSDL.so";
 #endif
 #ifdef __APPLE__
-const std::string sdlLibrary = "SDL.dylib";
+const std::string sdlLibrary = "libSDL.dylib";
 #endif
 
 } // end namespace guiLibraries

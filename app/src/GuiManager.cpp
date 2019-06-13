@@ -14,7 +14,7 @@ void GuiManager::loadGui(const std::string& lib, int width, int height) {
         m_dlloader->closeLibrary();
     }
 
-    m_dlloader.reset(new dlloader::DLLoader<IGui>(lib));
+    m_dlloader = std::make_unique<dlloader::DLLoader<IGui>>(lib);
 
     if (!m_dlloader->openLibrary()) {
         throw LoadGuiException("Cannot load library");
@@ -28,6 +28,7 @@ void GuiManager::loadGui(const std::string& lib, int width, int height) {
 }
 
 GuiManager::~GuiManager() {
+    m_gui.reset();
     if (m_dlloader) {
         m_dlloader->closeLibrary();
     }

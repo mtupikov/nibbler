@@ -13,10 +13,6 @@ SDL_Window* SDLib::getWindow() {
     return m_window;
 }
 
-SDL_Surface* SDLib::getScreen() {
-    return m_screen;
-}
-
 void SDLib::setWindow(SDL_Window* window) {
     m_window = window;
 }
@@ -45,11 +41,11 @@ IGui* allocator(int x, int y) {
 }
 
 void deleter(IGui* gui) {
-    auto* sdlgui = dynamic_cast<SDLib*>(gui);
+    auto* sdlGui = dynamic_cast<SDLib*>(gui);
 
-    SDL_DestroyWindow(sdlgui->getWindow());
+    SDL_DestroyWindow(sdlGui->getWindow());
     SDL_Quit();
-    delete sdlgui;
+    delete sdlGui;
 }
 
 }

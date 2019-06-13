@@ -78,20 +78,24 @@ std::list<SnakeBlockPtr>& Snake::getSnakeList() {
 bool Snake::checkBordersCollision(SnakeBlock& head) const{
 	switch (m_snakeDirection) {
 		case Directions::Up:
-			if (head.getY() == 1)
-				return true;
+			if (head.getY() == 1) {
+                return true;
+            }
 			break;
 		case Directions::Down:
-			if (head.getY() == Map::getHeight() - 2)
-				return true;
+			if (head.getY() == Map::getHeight() - 2) {
+                return true;
+            }
 			break;
 		case Directions::Left:
-			if (head.getX() == 1)
-				return true;
+			if (head.getX() == 1) {
+                return true;
+            }
 			break;
 		case Directions::Right:
-			if (head.getX() == Map::getWidth() - 2)
-				return true;
+			if (head.getX() == Map::getWidth() - 2) {
+                return true;
+            }
 			break;
 	}
 	return false;
@@ -104,20 +108,24 @@ Directions Snake::getDirection() const {
 bool Snake::checkSnakeBlocksCollision(SnakeBlock& head) const {
 	switch (m_snakeDirection) {
 		case Directions::Up:
-			if (checkBlockLiesOnThisAxis(head.getX(), head.getY() - 1))
-				return true;
+			if (checkBlockLiesOnThisAxis(head.getX(), head.getY() - 1)) {
+                return true;
+            }
 			break;
 		case Directions::Down:
-			if (checkBlockLiesOnThisAxis(head.getX(), head.getY() + 1))
-				return true;
+			if (checkBlockLiesOnThisAxis(head.getX(), head.getY() + 1)) {
+                return true;
+            }
 			break;
 		case Directions::Left:
-			if (checkBlockLiesOnThisAxis(head.getX() - 1, head.getY()))
-				return true;
+			if (checkBlockLiesOnThisAxis(head.getX() - 1, head.getY())) {
+                return true;
+            }
 			break;
 		case Directions::Right:
-			if (checkBlockLiesOnThisAxis(head.getX() + 1, head.getY()))
-				return true;
+			if (checkBlockLiesOnThisAxis(head.getX() + 1, head.getY())) {
+                return true;
+            }
 			break;
 	}
 	return false;

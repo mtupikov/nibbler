@@ -8,15 +8,15 @@
 
 Game::Game(int width, int height) {
     m_model = GameModel::getInstance(width, height);
-	m_guiManager.reset(new GuiManager());
+	m_guiManager = std::make_unique<GuiManager>();
 }
 
 void Game::gameLoop() {
     auto map = m_model->getMap();
     m_guiManager->loadGui(guiLibraries::sdlLibrary, map->getWidth(), map->getHeight());
+    auto gui = m_guiManager->getGui();
 
 	while (!m_model->isQuit()) {
-        auto gui = m_guiManager->getGui();
         gui->checkControls(m_model);
 		m_model->getSnake()->moveSnake();
 
