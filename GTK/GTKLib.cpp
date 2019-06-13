@@ -8,8 +8,7 @@ GtkWidget* GTKLib::getWindow() const {
     return m_window;
 }
 
-void GTKLib::setWindow(GtkWidget *window)
-{
+void GTKLib::setWindow(GtkWidget* window) {
     m_window = window;
 }
 
@@ -27,7 +26,7 @@ IGui* allocator(int x, int y) {
     gtk_window_set_default_size(GTK_WINDOW(window), x, y);
     gtk_container_set_border_width(GTK_CONTAINER(window), 50);
     g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(gtk_main_quit), NULL);
-    gtk_container_border_width(GTK_CONTAINER(window), 10);
+    gtk_container_set_border_width(GTK_CONTAINER(window), 10);
     gui->setWindow(window);
 
     return gui;
