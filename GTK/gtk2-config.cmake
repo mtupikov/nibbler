@@ -1,0 +1,12 @@
+if (WIN32)
+	set(GTK2_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/include")
+
+	# Support both 32 and 64 bit builds
+	if (${CMAKE_SIZEOF_VOID_P} MATCHES 8)
+		set(GTK2_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/lib/x64/GTK2.lib;${CMAKE_CURRENT_SOURCE_DIR}/lib/x64/GTK2main.lib")
+	else()
+		set(GTK2_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/lib/x86/GTK2.lib;${CMAKE_CURRENT_SOURCE_DIR}/lib/x86/GTK2main.lib")
+	endif()
+
+	string(STRIP "${GTK2_LIBRARIES}" GTK2_LIBRARIES)
+endif()

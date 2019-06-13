@@ -15,12 +15,15 @@ namespace guiLibraries {
 
 #ifdef WIN32
 const std::string sdlLibrary = "SDL.dll";
+const std::string gtkLibrary = "GTK.dll";
 #endif
 #ifdef __linux__
 const std::string sdlLibrary = "libSDL.so";
+const std::string gtkLibrary = "libGTK.so";
 #endif
 #ifdef __APPLE__
 const std::string sdlLibrary = "libSDL.dylib";
+const std::string gtkLibrary = "libGTK.dylib";
 #endif
 
 } // end namespace guiLibraries

@@ -1,5 +1,4 @@
-#ifndef SFMLLIB_HPP
-# define SFMLLIB_HPP
+#pragma once
 
 #include <SFML/Window.hpp>
 #include "../../includes/IGui.hpp"
@@ -20,5 +19,3 @@ public:
 private:
     sf::RenderWindow	window;
 };
-
-#endif
