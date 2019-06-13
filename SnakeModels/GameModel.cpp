@@ -11,11 +11,11 @@ GameModel::GameModel(int width, int height) {
 	m_score = 0;
 }
 
-std::shared_ptr<Snake> GameModel::getSnake() const{
+std::shared_ptr<Snake>& GameModel::getSnake() {
 	return m_snake;
 }
 
-std::shared_ptr<Map> GameModel::getMap() const{
+std::shared_ptr<Map>& GameModel::getMap() {
 	return m_map;
 }
 
@@ -37,7 +37,7 @@ void GameModel::quit() {
 
 std::shared_ptr<GameModel> GameModel::m_gameModel{ nullptr };
 
-std::shared_ptr<GameModel> GameModel::getInstance(int x, int y) {
+std::shared_ptr<GameModel>& GameModel::getInstance(int x, int y) {
     if (m_gameModel) {
         return m_gameModel;
 	}
@@ -47,7 +47,7 @@ std::shared_ptr<GameModel> GameModel::getInstance(int x, int y) {
     return m_gameModel;
 }
 
-std::shared_ptr<GameModel> GameModel::getInstance() {
+std::shared_ptr<GameModel>& GameModel::getInstance() {
 	return getInstance(20, 20);
 }
 
