@@ -1,21 +1,20 @@
 #pragma once
 
+#include "IGui.h"
+
 #include <SFML/Window.hpp>
-#include "../../includes/IGui.hpp"
 
-
-class SFMLLib: public IGui {
-
+class SFMLib : public IGui {
 public:
-    SFMLLib(int x, int y);
-    ~SFMLLib();
+    SFMLib() = default;
+    virtual ~SFMLib() override = default;
 
-    void	display(int x, int y);
+    sf::Window* getWindow() const;
+    void setWindow(sf::Window* window);
 
-    void	close();
-
-	IGui		*init(int x, int y);
+    void display(std::shared_ptr<GameModel>& model) override;
+    void checkControls(std::shared_ptr<GameModel>& model) override;
 
 private:
-    sf::RenderWindow	window;
+    sf::Window* m_window{ nullptr };
 };

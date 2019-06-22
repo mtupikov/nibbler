@@ -1,1 +1,1 @@
-cmake . -Bbuild && cmake --build ./build
+cmake . -G"MSYS Makefiles" -Bbuild && cmake --build ./build

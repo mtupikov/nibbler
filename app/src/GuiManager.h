@@ -14,16 +14,16 @@
 namespace guiLibraries {
 
 #ifdef WIN32
-const std::string sdlLibrary = "SDL.dll";
-const std::string gtkLibrary = "GTK.dll";
+const std::string sdlLibrary = "libSDLib.dll";
+const std::string sfmlLibrary = "libSFMLib.dll";
 #endif
 #ifdef __linux__
-const std::string sdlLibrary = "libSDL.so";
-const std::string gtkLibrary = "libGTK.so";
+const std::string sdlLibrary = "libSDLib.so";
+const std::string sfmlLibrary = "libSFMLib.so";
 #endif
 #ifdef __APPLE__
-const std::string sdlLibrary = "libSDL.dylib";
-const std::string gtkLibrary = "libGTK.dylib";
+const std::string sdlLibrary = "libSDLib.dylib";
+const std::string sfmlLibrary = "libSFMLib.dylib";
 #endif
 
 } // end namespace guiLibraries
@@ -40,5 +40,5 @@ public:
 
 private:
     std::shared_ptr<IGui> m_gui;
-    std::unique_ptr<dlloader::DLLoader<IGui>> m_dlloader;
+    std::unique_ptr<dlloader::DLLoader<IGui>> m_dlloader{ nullptr };
 };

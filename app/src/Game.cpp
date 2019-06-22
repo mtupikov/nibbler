@@ -13,7 +13,7 @@ Game::Game(int width, int height) {
 
 void Game::gameLoop() {
     auto map = m_model->getMap();
-    m_guiManager->loadGui(guiLibraries::gtkLibrary, map->getWidth(), map->getHeight());
+    m_guiManager->loadGui(guiLibraries::sdlLibrary, map->getWidth(), map->getHeight());
     auto gui = m_guiManager->getGui();
 
 	while (!m_model->isQuit()) {

@@ -1,36 +1,44 @@
-#include <SFML/Graphics.hpp>
-#include "SFMLLib.hpp"
+#include "SFMLib.h"
 
-SFMLLib::SFMLLib(int x, int y): window(sf::VideoMode(20 * x, 20 * y), "nibbler")
-{
+#include "GameModel.h"
+
+#include <iostream>
+
+sf::Window* SFMLib::getWindow() const {
+    return m_window;
 }
 
-void	SFMLLib::display(int x, int y)
-{
-    sf::CircleShape		circle = sf::CircleShape(10, 50);
-
-    this->window.clear(sf::Color::Black);
-
-    circle.setPosition(y / 2, x / 2);
-    this->window.draw(circle);
-    this->window.display();
+void SFMLib::setWindow(sf::Window* window) {
+    m_window = window;
 }
 
-void	SFMLLib::close(void)
-{
-    this->window.clear();
-    this->window.close();
+extern "C" {
+
+IGui* allocator(int x, int y) {
+    auto gui = new SFMLib();
+    gui->setWindow(new sf::Window(sf::VideoMode(static_cast<unsigned int>(x * 20), static_cast<unsigned int>(y * 20)), "nibbler"));
+    return gui;
 }
 
-extern "C" IGui		*init(int x, int y)
-{
-    return (new SFMLLib(x, y));
+void deleter(IGui* gui) {
+    auto sfmlGui = dynamic_cast<SFMLib*>(gui);
+    delete sfmlGui;
 }
 
-extern "C" void		close(IGui *gui)
-{
-    SFMLLib		*sfmllib = dynamic_cast<SFMLLib *>(gui);
+}
 
-    sfmllib->close();
+void SFMLib::display(std::shared_ptr<GameModel>& model) {
 
 }
+
+void SFMLib::checkControls(std::shared_ptr<GameModel>& model) {
+    sf::Event event;
+    while (m_window->pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            model.get()->quit();
+            m_window->close();
+        }
+    }
+}
+
+
