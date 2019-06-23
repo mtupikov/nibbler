@@ -7,7 +7,7 @@ public:
 	SnakeBlock(int x, int y, BlockType type, bool isHead);
 	~SnakeBlock() override = default;
 
-	bool isItHead();
+	bool isHead();
 	void incX();
 	void decX();
 	void incY();

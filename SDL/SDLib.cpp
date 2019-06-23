@@ -9,6 +9,13 @@
 #include <iostream>
 #include <SDL.h>
 
+namespace {
+
+int blockSize = 20;
+const std::string windowTitle{ "nibbler (SDL) Score: " };
+
+}
+
 SDL_Window* SDLib::getWindow() {
     return m_window;
 }
@@ -28,7 +35,7 @@ IGui* allocator(int x, int y) {
         return nullptr;
     }
 
-    gui->setWindow(SDL_CreateWindow("nibbler", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, x * 20, y * 20, SDL_WINDOW_SHOWN));
+    gui->setWindow(SDL_CreateWindow(windowTitle.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, x * blockSize, y * blockSize, SDL_WINDOW_SHOWN));
 
     if (!gui->getWindow()) {
         std::cout << SDL_GetError() << std::endl;
@@ -45,6 +52,7 @@ void deleter(IGui* gui) {
 
     SDL_DestroyWindow(sdlGui->getWindow());
     SDL_Quit();
+
     delete sdlGui;
 }
 
@@ -53,14 +61,16 @@ void deleter(IGui* gui) {
 void SDLib::display(std::shared_ptr<GameModel>& model) {
 	int snakeLen = model->getScore() + 4;
     SDL_Delay(static_cast<size_t>(150 - snakeLen % 120));
-	int blockSize = 20;
 
-    auto& map = *model->getMap().get();
-    displayMap(map, blockSize);
-	displaySnake(model, blockSize);
-	displayFood(map, blockSize);
+    auto& map = *model->getMap();
+    displayMap(map);
+	displaySnake(model->getSnake());
+	displayFood(map.getFoodBlock());
 
     SDL_UpdateWindowSurface(getWindow());
+
+    std::string title = windowTitle + std::to_string(model->getScore());
+    SDL_SetWindowTitle(getWindow(), title.c_str());
 }
 
 void SDLib::setScreen(SDL_Surface* screen) {
@@ -74,26 +84,34 @@ void SDLib::checkControls(std::shared_ptr<GameModel>& model) {
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE) {
 			model->quit();
-        }
-
-        if (event.type == SDL_KEYDOWN) {
+        } else if (event.type == SDL_KEYDOWN) {
             switch (event.key.keysym.sym) {
 				case SDLK_w:
-                    if (snake->getDirection() != Directions::Up)
+                    if (snake->getDirection() != Directions::Up) {
                         snake->setDirection(Directions::Up);
+                    }
 					break;
 				case SDLK_s:
-                    if (snake->getDirection() != Directions::Up)
+                    if (snake->getDirection() != Directions::Up) {
                         snake->setDirection(Directions::Down);
+                    }
 					break;
 				case SDLK_d:
-                    if (snake->getDirection() != Directions::Left)
+                    if (snake->getDirection() != Directions::Left) {
                         snake->setDirection(Directions::Right);
+                    }
 					break;
 				case SDLK_a:
-                    if (snake->getDirection() != Directions::Right)
+                    if (snake->getDirection() != Directions::Right) {
                         snake->setDirection(Directions::Left);
+                    }
 					break;
+                case SDLK_2:
+                    model->setLib(DisplayLibrary::SFML);
+                    break;
+                case SDLK_3:
+                    model->setLib(DisplayLibrary::GLFW);
+                    break;
 				default:
 					break;
 			}
@@ -101,7 +119,7 @@ void SDLib::checkControls(std::shared_ptr<GameModel>& model) {
 	}
 }
 
-void SDLib::displayMap(Map& map, int blockSize) {
+void SDLib::displayMap(Map& map) {
     auto& mapBlocks = map.getMapBlocks();
     for (auto& block : mapBlocks) {
 		SDL_Rect rect{};
@@ -122,8 +140,8 @@ void SDLib::displayMap(Map& map, int blockSize) {
 	}
 }
 
-void SDLib::displaySnake(std::shared_ptr<GameModel>& model, int blockSize) {
-    auto snakeBlocks = model->getSnake()->getSnakeList();
+void SDLib::displaySnake(const std::shared_ptr<Snake>& model) {
+    auto snakeBlocks = model->getSnakeList();
     for (auto& block : snakeBlocks) {
 		SDL_Rect rect{};
 		rect.x = block->getX() * blockSize;
@@ -131,7 +149,7 @@ void SDLib::displaySnake(std::shared_ptr<GameModel>& model, int blockSize) {
 		rect.w = blockSize;
 		rect.h = blockSize;
 
-        if (block->isItHead()) {
+        if (block->isHead()) {
             SDL_FillRect(m_screen, &rect, 0x00FF00);
         } else {
             SDL_FillRect(m_screen, &rect, 0x00CC00);
@@ -139,12 +157,10 @@ void SDLib::displaySnake(std::shared_ptr<GameModel>& model, int blockSize) {
     }
 }
 
-void SDLib::displayFood(Map& map, int blockSize) {
-    auto block = map.getFoodBlock();
-
+void SDLib::displayFood(const FoodBlockPtr& foodBlock) {
 	SDL_Rect rect{};
-    rect.x = block->getX() * blockSize;
-    rect.y = block->getY() * blockSize;
+    rect.x = foodBlock->getX() * blockSize;
+    rect.y = foodBlock->getY() * blockSize;
 	rect.w = blockSize;
 	rect.h = blockSize;
 

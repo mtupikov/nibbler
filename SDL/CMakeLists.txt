@@ -6,10 +6,6 @@ set(headers
     SDLib.h
 )
 
-if (WIN32)
-    set(SDL2_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-endif()
-
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 

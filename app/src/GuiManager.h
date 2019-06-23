@@ -16,14 +16,17 @@ namespace guiLibraries {
 #ifdef WIN32
 const std::string sdlLibrary = "libSDLib.dll";
 const std::string sfmlLibrary = "libSFMLib.dll";
+const std::string openGLib = "libOpenGLib.dll";
 #endif
 #ifdef __linux__
 const std::string sdlLibrary = "libSDLib.so";
 const std::string sfmlLibrary = "libSFMLib.so";
+const std::string openGLib = "libOpenGLib.so";
 #endif
 #ifdef __APPLE__
 const std::string sdlLibrary = "libSDLib.dylib";
 const std::string sfmlLibrary = "libSFMLib.dylib";
+const std::string openGLLibrary = "libOpenGLib.dylib";
 #endif
 
 } // end namespace guiLibraries

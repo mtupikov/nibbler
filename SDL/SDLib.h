@@ -1,7 +1,11 @@
+#pragma once
+
 #include "IGui.h"
 
-class GmaeModel;
+#include "Ptrs.h"
+
 class Map;
+class Snake;
 struct SDL_Window;
 struct SDL_Surface;
 
@@ -18,9 +22,9 @@ public:
     void checkControls(std::shared_ptr<GameModel>& model) override;
 
 private:
-    void displayMap(Map& map, int blockSize);
-    void displaySnake(std::shared_ptr<GameModel>& model, int blockSize);
-    void displayFood(Map& map, int blockSize);
+    void displayMap(Map& map);
+    void displaySnake(const std::shared_ptr<Snake>& model);
+    void displayFood(const FoodBlockPtr& foodBlock);
 
     SDL_Window* m_window{ nullptr };
     SDL_Surface* m_screen{ nullptr };

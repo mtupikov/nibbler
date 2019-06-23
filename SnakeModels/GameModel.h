@@ -6,7 +6,9 @@ class Snake;
 class Map;
 
 enum class DisplayLibrary {
-	SDL
+	SDL,
+	SFML,
+	GLFW
 };
 
 class GameModel final {
@@ -21,7 +23,7 @@ public:
     std::shared_ptr<Map>& getMap();
 
 	DisplayLibrary getLib() const;
-	void setLib(DisplayLibrary &lib);
+	void setLib(DisplayLibrary lib);
 	int getScore() const;
 	void incScore();
 

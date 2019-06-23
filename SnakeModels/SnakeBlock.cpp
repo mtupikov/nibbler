@@ -6,7 +6,7 @@ SnakeBlock::SnakeBlock(int x, int y, BlockType type, bool isHead) :
 {
 }
 
-bool SnakeBlock::isItHead()  {
+bool SnakeBlock::isHead()  {
 	return m_isHead;
 }
 

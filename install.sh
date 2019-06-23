@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Brew Update"
-#brew update
+brew update
 echo "Done"
 
 echo "SFML installing.."
@@ -11,3 +11,6 @@ echo "SDL2 installing.."
 brew install SDL2
 echo "Done"
 
+echo "SDL2 installing.."
+brew install glfw
+echo "Done"

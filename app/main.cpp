@@ -51,7 +51,7 @@ int	main(int argc, char** argv){
 			return usage();
 		}
 
-        game.reset(new Game(params.width, params.height));
+        game = std::make_unique<Game>(params.width, params.height);
 		game->gameLoop();
     } catch (std::exception& e) {
 		std::cout << e.what() << std::endl;

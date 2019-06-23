@@ -19,7 +19,7 @@ std::shared_ptr<Map>& GameModel::getMap() {
 	return m_map;
 }
 
-void GameModel::setLib(DisplayLibrary& lib) {
+void GameModel::setLib(DisplayLibrary lib) {
 	m_lib = lib;
 }
 

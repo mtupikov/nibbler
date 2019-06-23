@@ -2,19 +2,30 @@
 
 #include "IGui.h"
 
-#include <SFML/Window.hpp>
+#include "Ptrs.h"
+
+namespace sf {
+    class RenderWindow;
+}
+
+class Map;
+class Snake;
 
 class SFMLib : public IGui {
 public:
     SFMLib() = default;
     virtual ~SFMLib() override = default;
 
-    sf::Window* getWindow() const;
-    void setWindow(sf::Window* window);
+    sf::RenderWindow* getWindow() const;
+    void setWindow(sf::RenderWindow* window);
 
     void display(std::shared_ptr<GameModel>& model) override;
     void checkControls(std::shared_ptr<GameModel>& model) override;
 
 private:
-    sf::Window* m_window{ nullptr };
+    void displayMap(Map& map);
+    void displaySnake(const std::shared_ptr<Snake>& model);
+    void displayFood(const FoodBlockPtr& foodBlock);
+
+    sf::RenderWindow* m_window{ nullptr };
 };

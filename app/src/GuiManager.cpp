@@ -10,6 +10,7 @@
 #include "Exception.h"
 
 void GuiManager::loadGui(const std::string& lib, int width, int height) {
+    m_gui.reset();
     if (m_dlloader) {
         m_dlloader->closeLibrary();
     }

@@ -2,19 +2,28 @@
 
 #include "IGui.h"
 
-#include <gl/GL.h>
+#include "Ptrs.h"
+
+class GLFWwindow;
+class Map;
+class Snake;
 
 class OpenGLib : public IGui {
 public:
     OpenGLib() = default;
-    virtual ~OpenGLib() override = default;
+    ~OpenGLib() override = default;
 
-    //sf::Window* getWindow() const;
-    //void setWindow(sf::Window* window);
+    GLFWwindow* getWindow() const;
+    void setWindow(GLFWwindow* window);
 
     void display(std::shared_ptr<GameModel>& model) override;
     void checkControls(std::shared_ptr<GameModel>& model) override;
 
 private:
-    //sf::Window* m_window{ nullptr };
+    static void drawBlock(BlockPtr&& block);
+    void displayMap(Map& map);
+    void displaySnake(const std::shared_ptr<Snake>& model);
+    void displayFood(const FoodBlockPtr& foodBlock);
+
+    GLFWwindow* m_window{ nullptr };
 };

@@ -5,6 +5,7 @@
 #include <memory>
 
 class GameModel;
+enum class DisplayLibrary;
 
 class Game final {
 public:
@@ -12,6 +13,8 @@ public:
 	void gameLoop();
 
 private:
+    void loadGui(DisplayLibrary lib);
+
     std::unique_ptr<GuiManager> m_guiManager;
     std::shared_ptr<GameModel> m_model;
 };
