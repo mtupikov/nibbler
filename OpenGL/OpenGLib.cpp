@@ -48,6 +48,7 @@ IGui* allocator(int x, int y) {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwMakeContextCurrent(gui->getWindow());
+    glfwSetInputMode(gui->getWindow(), GLFW_STICKY_KEYS, GLFW_TRUE);
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glMatrixMode(GL_PROJECTION);
